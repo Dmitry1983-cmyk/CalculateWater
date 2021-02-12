@@ -2,9 +2,12 @@ package com.example.calculatewater;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +19,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     Switch switchSex;
-    TextView txtWeight,txtGrow;
+    TextView txtWeight,txtGrow,txtMale,txtFemale;
     Button btnNext;
     UserClass user;
 
@@ -31,6 +34,28 @@ public class MainActivity extends AppCompatActivity {
         txtWeight=findViewById(R.id.txt_weight);
         txtGrow=findViewById(R.id.txt_grow);
         btnNext=findViewById(R.id.btn_Next);
+        txtMale=findViewById(R.id.textView3);
+        txtFemale=findViewById(R.id.textView4);
+
+        int color_male = getResources().getColor(R.color.male_color,null);
+        int color_female = getResources().getColor(R.color.female_color,null);
+        int wh_color=getResources().getColor(R.color.white,null);
+        txtMale.setTextColor(color_male);
+
+        switchSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) //Line A
+            {
+                if(switchSex.isChecked()){
+                    txtMale.setTextColor(wh_color);
+                    txtFemale.setTextColor(color_female);
+
+                }else {
+                    txtMale.setTextColor(color_male);
+                    txtFemale.setTextColor(wh_color);
+                }
+            }
+        });
 
     }
 
@@ -87,9 +112,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            /*-------------------next activity*/
+            Intent intent = new Intent(this, UserActivity.class);
+            String user_weight = txtWeight.getText().toString();
+            String user_grow=txtGrow.getText().toString();
+            String user_sex=getsex;
+            intent.putExtra("user_weight", user_weight);
+            intent.putExtra("user_grow", user_grow);
+            intent.putExtra("user_sex", user_sex);
+            startActivity(intent);
+            /*-------------------end next activity*/
+
         }
         else {
             Toast.makeText(this, "Введены не коректные данные! ", Toast.LENGTH_SHORT).show();
+            txtWeight.setText("");txtGrow.setText("");
         }
     }
 

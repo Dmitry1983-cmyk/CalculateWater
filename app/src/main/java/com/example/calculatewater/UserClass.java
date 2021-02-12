@@ -15,8 +15,8 @@ public class UserClass {
 
    }
 
-//   String getSexUser(){return sexUser;}
-//   int getWeightUser(){return weightUser;}
-//   int getGrowUser(){return growUser;}
+   String getSexUser(){return sexUser;}
+   int getWeightUser(){return weightUser;}
+   int getGrowUser(){return growUser;}
 
 }
